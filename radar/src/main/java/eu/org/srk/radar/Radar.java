@@ -86,8 +86,8 @@ public class Radar {
 
 	boolean create = false;
 
-	String filename = "c://theo//list.ser";
-	String filenamezm = "c://theo//listzm.ser";
+	String filename;
+	String filenamezm;
 	Services service = new Services();
 	static StopButton ButtonB = new StopButton();
 
@@ -1029,17 +1029,18 @@ public class Radar {
 			}
 
 			if (e.getActionCommand() == "SendJourneySelect") {
-				Integer rid = new Integer(travelId70.getText());
-				Byte dpid = new Byte(DPId70.getText());
+				Integer rid = Integer.valueOf(travelId70.getText());
+				Binary t = new Binary();
+				Byte dpid = t.intToByte(Integer.valueOf(DPId70.getText()));
 				SaveJourneySelect(rid, dpid);
 			}
 
 			if (e.getActionCommand() == "Store Vessels") {
-				service.storePositionReports(filename);
+				// service.storePositionReports(filename);
 			}
 
 			if (e.getActionCommand() == "Load Sightmeters") {
-				service.loadZichtMeters(filenamezm);
+				// service.loadZichtMeters(filenamezm);
 			}
 
 			if (e.getActionCommand() == "Show Radar") {
@@ -1283,8 +1284,8 @@ public class Radar {
 	};
 
 	void SaveJourneySelect(Integer ReisID, Byte DpID) {
-		System.out.println("Nog implementeren");
-
+		JourneySelect p = JourneySelect.getInstance();
+		p.setButton(ReisID, DpID);
 	};
 
 	void SaveZichtmeter(Integer meter) {
@@ -1330,6 +1331,11 @@ public class Radar {
 		service.list = null;
 	};
 
+	public Radar(String f1, String f2) {
+		filename = f1;
+		filenamezm = f2;
+	}
+
 	// #####################################################################################################################
 	// Main
 	// #####################################################################################################################
@@ -1346,6 +1352,9 @@ public class Radar {
 				String server = props.getProperty("server");
 				String portListen = props.getProperty("portlisten");
 				String portWrite = props.getProperty("portwrite");
+
+				String filename = props.getProperty("filename");
+				String filenamezm = props.getProperty("filenamezm");
 
 				logs.logInfo("Start application: " + server + ":" + portListen
 						+ " " + portWrite);
@@ -1367,7 +1376,7 @@ public class Radar {
 					System.exit(0);
 				}
 
-				Radar t = new Radar();
+				Radar t = new Radar(filename, filenamezm);
 				ButtonB = StopButton.getInstance();
 				ButtonB.setButton(true);
 

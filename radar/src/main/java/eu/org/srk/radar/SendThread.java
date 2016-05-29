@@ -57,6 +57,7 @@ class SendThread extends Thread {
 		int randomInt = randomGenerator.nextInt(30) + 5;
 
 		logs = LoggerObject.getInstance();
+		JourneySelect p = JourneySelect.getInstance();
 		error = false;
 
 		while (!error) {
@@ -81,25 +82,25 @@ class SendThread extends Thread {
 
 				if (buttonB.getButton()) {
 
-					randomInt = randomGenerator.nextInt(30);
-					if (randomInt > 15) {
-						if (list.size() != 0) {
-							randomInt = randomGenerator
-									.nextInt(list.size());
-							if (randomInt > 0) {
-								PositionReport r = (PositionReport) list
-										.get(randomInt);
-								int reisID = r.getReisID();
-								byte dpid = r.getDpID();
-								sendReisInformatie(reisID, dpid);
-								try {
-									Thread.sleep(600);
-								} catch (InterruptedException ie) {
-									// Handle exception
-								}
-							}
-						}
-					}
+					// randomInt = randomGenerator.nextInt(30);
+					// if (randomInt > 15) {
+					// if (list.size() != 0) {
+					// randomInt = randomGenerator
+					// .nextInt(list.size());
+					// if (randomInt > 0) {
+					// PositionReport r = (PositionReport) list
+					// .get(randomInt);
+					// int reisID = r.getReisID();
+					// byte dpid = r.getDpID();
+					// sendReisTravelSelected(reisID, dpid);
+					// try {
+					// Thread.sleep(600);
+					// } catch (InterruptedException ie) {
+					// // Handle exception
+					// }
+					// }
+					// }
+					// }
 					logs.logInfo("Send zicht meter");
 					sendZichtMeter(0);
 					try {
@@ -120,6 +121,19 @@ class SendThread extends Thread {
 					}
 					count++;
 				}
+			} else {
+				if (p.isLoaded()) {
+					byte b = p.getDpID();
+					Long i = new Long(p.getTravelID());
+					p.clearLoaded();
+					try {
+						Thread.sleep(600);
+					} catch (InterruptedException ie) {
+						// Handle exception
+					}
+					sendTraveLSelected(i, b);
+				}
+
 			}
 		}
 
@@ -194,8 +208,8 @@ class SendThread extends Thread {
 
 	}
 
-	// Send Reis informatie
-	public void sendReisInformatie(long reisID, byte dpid) {
+	// Send Travel Selected
+	public void sendTraveLSelected(long reisID, byte dpid) {
 		try {
 			Binary t = new Binary();
 			int b = 105;
@@ -214,7 +228,7 @@ class SendThread extends Thread {
 		}
 	}
 
-	// Send Reis informatie
+	// Send Sight Meter
 	public void sendZichtMeter(int meter) {
 		try {
 			Binary t = new Binary();
