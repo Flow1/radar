@@ -15,7 +15,7 @@ import org.apache.log4j.Level;
 
 public class LoggerObject {
 
-	static final Logger LOG = Logger.getLogger("RW Interface");;
+	static final Logger LOG = Logger.getLogger("RadarSim");;
 
 	private static LoggerObject instance = null;
 
@@ -30,8 +30,8 @@ public class LoggerObject {
 	}
 
 	public void logDebug(String text) {
-		if (LOG.isInfoEnabled())
-			LOG.info("Debug: " + text);
+//		if (LOG.isInfoEnabled())
+			LOG.debug("Debug: " + text);
 	}
 
 	public void logInfo(String text) {

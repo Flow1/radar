@@ -50,7 +50,7 @@ public class ServerSocketManagement {
 		this.port = port1;
 		logs = LoggerObject.getInstance();
 
-		logs.logError("Create server socket: " + server1 + ":" + port1);
+		logs.logInfo("Create server socket: " + server1 + ":" + port1);
 
 		// Check if server exist
 		try {

@@ -1223,7 +1223,6 @@ public class Radar {
 
 		if (r != null) {
 			r.setReisID(new Integer(travelId.getText()));
-			// r.setDpID(new Byte(DPId.getText()));
 			r.setDpID(t.intToByte(Integer.valueOf(DPId.getText())));
 			r.setScheepsLabel(shipLabel.getText());
 			r.setScheepsNaam(shipName.getText());
@@ -1301,7 +1300,6 @@ public class Radar {
 			} else {
 				CommStatus.setText("1");
 			}
-			// CommStatus.setText(String.valueOf((char) r.getComstat()));
 			zichtMeter.setText(r.getIdName());
 			zelfTest.setText(String.valueOf((char) r.getZelftest()));
 			Status.setText(String.valueOf((char) r.getStatusByte()));
@@ -1340,7 +1338,9 @@ public class Radar {
 
 				logs.logInfo("Start application: " + server + ":" + portListen
 						+ " " + portWrite);
-
+				logs.logDebug("Start application: " + server + ":" + portListen
+						+ " " + portWrite);
+				
 				if (server == null) {
 					logs.logError("Servername in properties not found");
 					System.exit(0);

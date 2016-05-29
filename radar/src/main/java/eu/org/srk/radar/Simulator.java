@@ -28,8 +28,8 @@ public class Simulator extends Thread {
 		String portListen = props.getProperty("portlisten");
 		String portWrite = props.getProperty("portwrite");
 
-		ServerSocket echoServer = null;
-		String line;
+//		ServerSocket echoServer = null;
+	//	String line;
 		DataInputStream is;
 		DataOutputStream os;
 
