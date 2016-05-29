@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Coordinate transformation for polygon
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 import java.awt.Polygon;

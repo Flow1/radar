@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Semaphore: not used currently
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 public abstract class Semaphore {

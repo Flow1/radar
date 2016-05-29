@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Delimeter class for size of input field
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 import javax.swing.text.PlainDocument;

@@ -30,8 +30,8 @@ public class LoggerObject {
 	}
 
 	public void logDebug(String text) {
-//		if (LOG.isInfoEnabled())
-			LOG.debug("Debug: " + text);
+		// if (LOG.isInfoEnabled())
+		LOG.debug("Debug: " + text);
 	}
 
 	public void logInfo(String text) {

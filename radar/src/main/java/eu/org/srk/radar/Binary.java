@@ -1,6 +1,12 @@
 /**
- * @author thex
- * Binary class for RW
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Binary class for RW-interface
+ *
+ * History
+ *
  */
 package eu.org.srk.radar;
 

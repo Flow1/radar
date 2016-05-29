@@ -1,3 +1,14 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Radar simulator main class
+ * Needs implementation of triggering a message to send "Journey Selected"
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 import java.awt.event.ActionEvent;
@@ -1340,7 +1351,7 @@ public class Radar {
 						+ " " + portWrite);
 				logs.logDebug("Start application: " + server + ":" + portListen
 						+ " " + portWrite);
-				
+
 				if (server == null) {
 					logs.logError("Servername in properties not found");
 					System.exit(0);

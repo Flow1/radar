@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Sender
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 import java.io.*;
@@ -41,6 +51,7 @@ class SendThread extends Thread {
 		// Communicate every 10 seconds
 		int sec = 4;
 		int count = 1;
+		int countsec = 0;
 		Random randomGenerator = new Random();
 
 		int randomInt = randomGenerator.nextInt(30) + 5;
@@ -62,47 +73,53 @@ class SendThread extends Thread {
 				// Handle exception
 			}
 
-			logs.logInfo("Wake up");
+			countsec++;
+			if (countsec >= 10) {
+				countsec = 0;
 
-			if (buttonB.getButton()) {
+				logs.logInfo("Wake up");
 
-				randomInt = randomGenerator.nextInt(30);
-				if (randomInt > 15) {
-					if (list.size() != 0) {
-						randomInt = randomGenerator.nextInt(list.size() + 1);
-						if (randomInt > 0) {
-							PositionReport r = (PositionReport) list
-									.get(randomInt);
-							int reisID = r.getReisID();
-							byte dpid = r.getDpID();
-							sendReisInformatie(reisID, dpid);
-							try {
-								Thread.sleep(600);
-							} catch (InterruptedException ie) {
-								// Handle exception
+				if (buttonB.getButton()) {
+
+					randomInt = randomGenerator.nextInt(30);
+					if (randomInt > 15) {
+						if (list.size() != 0) {
+							randomInt = randomGenerator
+									.nextInt(list.size());
+							if (randomInt > 0) {
+								PositionReport r = (PositionReport) list
+										.get(randomInt);
+								int reisID = r.getReisID();
+								byte dpid = r.getDpID();
+								sendReisInformatie(reisID, dpid);
+								try {
+									Thread.sleep(600);
+								} catch (InterruptedException ie) {
+									// Handle exception
+								}
 							}
 						}
 					}
-				}
-				logs.logInfo("Send zicht meter");
-				sendZichtMeter(0);
-				try {
-					Thread.sleep(600);
-				} catch (InterruptedException ie) {
-					// Handle exception
-				}
-				sendZichtMeter(1);
-
-				if (count == 6) {
+					logs.logInfo("Send zicht meter");
+					sendZichtMeter(0);
 					try {
 						Thread.sleep(600);
 					} catch (InterruptedException ie) {
 						// Handle exception
 					}
-					sendPositionReport(sec);
-					count = 0;
+					sendZichtMeter(1);
+
+					if (count == 6) {
+						try {
+							Thread.sleep(600);
+						} catch (InterruptedException ie) {
+							// Handle exception
+						}
+						sendPositionReport(sec);
+						count = 0;
+					}
+					count++;
 				}
-				count++;
 			}
 		}
 
@@ -200,7 +217,6 @@ class SendThread extends Thread {
 	// Send Reis informatie
 	public void sendZichtMeter(int meter) {
 		try {
-			System.out.println("Zend zicht");
 			Binary t = new Binary();
 			int b = 102;
 			byte[] c = t.toByteArray1(b);

@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Temp stop messaging to IVS
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 public class StopButton {

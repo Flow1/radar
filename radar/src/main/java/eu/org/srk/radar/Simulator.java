@@ -1,3 +1,13 @@
+/**
+ * @author Theo den Exter, ARS
+ * Date: May 21th 2016
+ * Version 1.0
+ *
+ * Simulator engine
+ *
+ * History
+ *
+ */
 package eu.org.srk.radar;
 
 import java.io.*;
@@ -28,8 +38,8 @@ public class Simulator extends Thread {
 		String portListen = props.getProperty("portlisten");
 		String portWrite = props.getProperty("portwrite");
 
-//		ServerSocket echoServer = null;
-	//	String line;
+		// ServerSocket echoServer = null;
+		// String line;
 		DataInputStream is;
 		DataOutputStream os;
 
