@@ -65,6 +65,10 @@ class ReceiveThread extends Thread {
 					processTrackIdentificatieUitgebreid(is);
 				if (command == 5)
 					processWijzigingReisGegevensUitgebreid(is);
+				if (command == 6)
+					processTrackIdentificatieRIS(is);
+				if (command == 7)
+					processWijzigingReisGegevensRIS(is);				
 			}
 		}
 	}
@@ -313,6 +317,105 @@ class ReceiveThread extends Thread {
 		}
 	}
 
+	// Process Incoming Track Identification RIS
+	void processTrackIdentificatieRIS(DataInputStream is) {
+		try {
+			Binary t = new Binary();
+
+			logs.logDebug("Track Identification RIS");
+
+			byte[] r = new byte[4];
+
+			r = getWord(is);
+			int reisid = t.fromByteArray1(r);
+			logs.logDebug("JourneyID: " + reisid);
+
+			r = getWord(is);
+			String scheepslabel = new String(r);
+			logs.logDebug("Ships label: " + scheepslabel);
+
+			r = getWord(is);
+			int nchar = t.fromByteArray1(r);
+			
+			String scheepsnaam ="";
+			for (int i=0;i<nchar;i=i+4) {
+				r = getWord(is);
+				if (r[0]==0) r[0]=' ';
+				if (r[1]==0) r[1]=' ';
+				if (r[2]==0) r[2]=' ';
+				if (r[3]==0) r[3]=' ';
+				String s1 = "" + (char) r[0] + (char) r[1] + (char) r[2]
+						+ (char) r[3];
+				scheepsnaam=scheepsnaam+s1;
+			}
+			scheepsnaam=scheepsnaam.trim();
+
+			r = getWord(is);
+			int scheepslengte = t.fromByteArray1(r);
+			logs.logDebug("Ships Length: " + scheepslengte);
+
+			r = getWord(is);
+			int scheepsbreedte = t.fromByteArray1(r);
+			logs.logDebug("Ships Width: " + scheepsbreedte);
+
+			r = getWord(is);
+			long mmmi = t.fromByteArray1Long(r);
+			logs.logDebug("MMMI: " + mmmi);
+			
+			r = getWord(is);
+			long imo = t.fromByteArray1Long(r);
+			logs.logDebug("IMO: " + imo);				
+			
+			r = getWord(is);
+			long euro = t.fromByteArray1Long(r);
+			logs.logDebug("Euro: " + euro);
+			
+			r = getWord(is);
+			int diepgang = t.fromByteArray1(r);
+			logs.logDebug("Ships Depth: " + diepgang);
+
+			r = getWord(is);
+			logs.logDebug("DP Id: " + t.byteToInt(r[2]));
+			logs.logDebug("Ships Attributes: " + r[3]);
+
+			boolean f = false;
+			if (!error) {
+				for (int i = 0; i < list.size(); i++) {
+
+					PositionReport w = (PositionReport) list.get(i);
+					if (w.getReisID() == reisid) {
+						w.setDpID(r[2]);
+						w.setScheepsLabel(scheepslabel);
+						w.setScheepsLengte(scheepslengte);
+						w.setScheepsBreedte(scheepsbreedte);
+						w.setScheepsNaam(scheepsnaam);
+						w.setScheepsDiepgang(diepgang);
+						byte j = r[3];
+						w.setScheepsKenmerk(j);
+						f = true;
+					}
+
+				}
+				if (!f) {
+					PositionReport w1 = new PositionReport();
+					w1.setReisID(reisid);
+					w1.setDpID(r[2]);
+					w1.setScheepsLabel(scheepslabel);
+					w1.setScheepsLengte(scheepslengte);
+					w1.setScheepsBreedte(scheepsbreedte);
+					w1.setScheepsNaam(scheepsnaam);
+					w1.setScheepsDiepgang(diepgang);
+					byte j = r[3];
+					w1.setScheepsKenmerk(j);
+					list.add(w1);
+				}
+			}
+
+		} catch (Exception e) {
+			disconnect();
+		}
+	}
+	
 	// Process Incoming Change Travel Data
 	void processWijzigingReisGegevens(DataInputStream is) {
 		try {
@@ -473,6 +576,109 @@ class ReceiveThread extends Thread {
 		}
 	}
 
+	// Process Incoming Traveldata ris
+	void processWijzigingReisGegevensRIS(DataInputStream is) {
+		try {
+			Binary t = new Binary();
+
+			logs.logDebug("Change Journey Data RIS");
+
+			byte[] r = new byte[4];
+
+			r = getWord(is);
+			int nelem = t.fromByteArray1(r);
+
+			for (int k = 0; k < nelem; k++) {
+
+				r = getWord(is);
+				int reisid = t.fromByteArray1(r);
+				logs.logDebug("JourneyID: " + reisid);
+
+				r = getWord(is);
+				String scheepslabel = new String(r);
+				logs.logDebug("Ships label: " + scheepslabel);
+
+
+				r = getWord(is);
+				int nchar = t.fromByteArray1(r);
+				
+				String scheepsnaam ="";
+				for (int i=0;i<nchar;i=i+4) {
+					r = getWord(is);
+					if (r[0]==0) r[0]=' ';
+					if (r[1]==0) r[1]=' ';
+					if (r[2]==0) r[2]=' ';
+					if (r[3]==0) r[3]=' ';
+					String s1 = "" + (char) r[0] + (char) r[1] + (char) r[2]
+							+ (char) r[3];
+					scheepsnaam=scheepsnaam+s1;
+				}
+				scheepsnaam=scheepsnaam.trim();
+				
+				logs.logDebug("Ships Name: " + scheepsnaam);
+
+				r = getWord(is);
+				int scheepslengte = t.fromByteArray1(r);
+				logs.logDebug("Ships Length: " + scheepslengte);
+
+				r = getWord(is);
+				int scheepsbreedte = t.fromByteArray1(r);
+				logs.logDebug("Ships Width: " + scheepsbreedte);
+
+				r = getWord(is);
+				int diepgang = t.fromByteArray1(r);
+				logs.logDebug("Ships Depth: " + diepgang);
+
+				r = getWord(is);
+				long mmmi = t.fromByteArray1Long(r);
+				logs.logDebug("MMMI: " + mmmi);
+				
+				r = getWord(is);
+				long imo = t.fromByteArray1Long(r);
+				logs.logDebug("IMO: " + imo);				
+				
+				r = getWord(is);
+				long euro = t.fromByteArray1Long(r);
+				logs.logDebug("Euro: " + euro);				
+				
+				r = getWord(is);
+				logs.logDebug("DP Id: " + t.byteToInt(r[2]));
+				logs.logDebug("Ships Attributes: " + r[3]);
+
+				boolean done = false;
+				if (!error) {
+					for (int i = 0; i < list.size(); i++) {
+						PositionReport w = (PositionReport) list.get(i);
+						if (w.getReisID() == reisid) {
+							w.setDpID(r[2]);
+							w.setScheepsLabel(scheepslabel);
+							w.setScheepsLengte(scheepslengte);
+							w.setScheepsBreedte(scheepsbreedte);
+							w.setScheepsDiepgang(diepgang);
+							byte j = r[3];
+							w.setScheepsKenmerk(j);
+							done = true;
+						}
+					}
+					if (!done) {
+						PositionReport w = new PositionReport();
+						w.setReisID(reisid);
+						w.setDpID(r[2]);
+						w.setScheepsLabel(scheepslabel);
+						w.setScheepsLengte(scheepslengte);
+						w.setScheepsBreedte(scheepsbreedte);
+						w.setScheepsDiepgang(diepgang);
+						byte j = r[3];
+						w.setScheepsKenmerk(j);
+						list.add(w);
+					}
+				}
+			}
+		} catch (Exception e) {
+			disconnect();
+		}
+	}
+	
 	// Process Incoming Video Display Mode
 	void processVideoDisplayMode(DataInputStream is) {
 		try {

@@ -81,34 +81,14 @@ class SendThread extends Thread {
 				logs.logInfo("Wake up");
 
 				if (buttonB.getButton()) {
-
-					// randomInt = randomGenerator.nextInt(30);
-					// if (randomInt > 15) {
-					// if (list.size() != 0) {
-					// randomInt = randomGenerator
-					// .nextInt(list.size());
-					// if (randomInt > 0) {
-					// PositionReport r = (PositionReport) list
-					// .get(randomInt);
-					// int reisID = r.getReisID();
-					// byte dpid = r.getDpID();
-					// sendReisTravelSelected(reisID, dpid);
-					// try {
-					// Thread.sleep(600);
-					// } catch (InterruptedException ie) {
-					// // Handle exception
-					// }
-					// }
-					// }
-					// }
-					logs.logInfo("Send zicht meter");
-					sendZichtMeter(0);
-					try {
-						Thread.sleep(600);
-					} catch (InterruptedException ie) {
-						// Handle exception
-					}
-					sendZichtMeter(1);
+//					logs.logInfo("Send zicht meter");
+//					sendZichtMeter(0);
+//					try {
+//						Thread.sleep(600);
+//					} catch (InterruptedException ie) {
+//						// Handle exception
+//					}
+//					sendZichtMeter(1);
 
 					if (count == 6) {
 						try {
