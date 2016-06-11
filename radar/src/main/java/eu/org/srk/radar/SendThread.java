@@ -165,10 +165,13 @@ class SendThread extends Thread {
 					c = t.toByteArray1(w.getReisID());
 					os.write(c, 0, 4);
 
-					c = t.toByteArray1(w.getXPos());
+					// Per bit 2000/1024 meter, output is RD meters, not WGS-84
+					Integer x=(int) Math.round(w.getXPos()*1024.0/2000.0);
+					c = t.toByteArray1(x);
 					os.write(c, 0, 4);
 
-					c = t.toByteArray1(w.getYPos());
+					Integer y=(int) Math.round(w.getYPos()*1024.0/2000.0);
+					c = t.toByteArray1(y);
 					os.write(c, 0, 4);
 
 					c[0] = 0;

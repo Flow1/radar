@@ -772,21 +772,29 @@ public class Radar {
 		jLabel60.setLocation(5, dimy - 30);
 		jLabel60.setSize(200, 20);
 
+		CoordTrans ct;
+		ct = CoordTrans.getInstance();
+		int x1=ct.calculateXPos(0, 0);
+		int y1=ct.calculateYPos(0, 0);
+		
 		JLabel jLabel62 = new JLabel(".");
 		jLabel62.setBackground(new Color(248, 213, 131));
-		jLabel62.setLocation(422, 322);
+		//jLabel62.setLocation(422, 322);
+		jLabel62.setLocation(x1, y1);
 		jLabel62.setForeground(Color.RED);
 		jLabel62.setSize(200, 20);
 
-		JLabel jLabel61 = new JLabel("Ellertshuizen Virtual Radar");
+		JLabel jLabel61 = new JLabel("Virtual Radar");
 		jLabel61.setBackground(new Color(248, 213, 131));
-		jLabel61.setLocation(390, 293);
+		//jLabel61.setLocation(390, 293);
+		jLabel61.setLocation(x1, y1);
 		jLabel61.setForeground(Color.BLACK);
 		jLabel61.setSize(200, 20);
 
 		JLabel jLabel63 = new JLabel("SRK Vlissingen");
 		jLabel63.setBackground(new Color(248, 213, 131));
 		jLabel63.setLocation(190, 220);
+		//jLabel63.setLocation(x1, y1);
 		jLabel63.setForeground(Color.RED);
 		jLabel63.setSize(200, 20);
 

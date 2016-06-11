@@ -197,7 +197,8 @@ class PositionReport implements Serializable {
 	}
 
 	public void calculateMove(int seconds) {
-		Double s = this.speed * 1.85200 * 1000 / 60.0 / 60.0; // Meters per
+		Double s = this.speed * 1.85200 * 1000 / 60.0 / 60.0; // Meters per sec
+		//s=s*1024/2000; // Units per sec
 
 		CoordTrans ct;
 		ct = CoordTrans.getInstance();

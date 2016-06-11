@@ -26,9 +26,8 @@ public class CoordTrans {
 
 	Polygon poly;
 
-	// Virtal radar position at Ellewoutsdijk
-	// N 51 23.635 E003 47.907
-	// RD: 44431 379511
+	// Virtal radar position at 
+	// RD: 64301, 381648
 	private static CoordTrans instance = null;
 
 	protected CoordTrans() {
@@ -64,8 +63,8 @@ public class CoordTrans {
 	}
 
 	public boolean isInWesterscheldt(Integer xpos, Integer ypos) {
-		int xpos1 = xpos + 44431;
-		int ypos1 = ypos + 379511;
+		int xpos1 = xpos + 64301;
+		int ypos1 = ypos + 381648;
 		int xp = (int) (1.0 * (xpos1 - xposm2) / (xposm - xposm2) * (dimx + offsetx))
 				- offsetx;
 		int yp = (int) (1.0 * (yposm - ypos1) / (yposm - yposm2) * (dimy + offsety))
@@ -74,8 +73,8 @@ public class CoordTrans {
 	}
 
 	public Integer calculateXPos(Integer xpos, Integer ypos) {
-		int xpos1 = xpos + 44431;
-		int ypos1 = ypos + 379511;
+		int xpos1 = xpos + 64301;
+		int ypos1 = ypos + 381648;
 		int xp = (int) (1.0 * (xpos1 - xposm2) / (xposm - xposm2) * (dimx + offsetx))
 				- offsetx;
 		// int yp=(int)
@@ -84,8 +83,8 @@ public class CoordTrans {
 	}
 
 	public Integer calculateYPos(Integer xpos, Integer ypos) {
-		int xpos1 = xpos + 44431;
-		int ypos1 = ypos + 379511;
+		int xpos1 = xpos + 64301;
+		int ypos1 = ypos + 381648;
 		// int xp=(int)
 		// (1.0*(xpos1-xposm2)/(xposm-xposm2)*(dimx+offsetx))-offsetx;
 		int yp = (int) (1.0 * (yposm - ypos1) / (yposm - yposm2) * (dimy + offsety))
