@@ -3,72 +3,67 @@
  * Date: May 21th 2016
  * Version 1.0
  *
- * Simulator engine
+ * Start communication engine
+ *
+ * Note: contains a teststub for providing messages from IVS to RW
+ *       This will also be the future interface between JMS and Engine
  *
  * History
  *
  */
+
 package eu.org.srk.radar;
 
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 public class Simulator extends Thread {
 
-	// List of journeys
-	List<Object> list = new ArrayList<Object>();
-	List<Object> listZichtMeter = new ArrayList<Object>();
-	Services service;
+	String server; 
+	String portListen;
+	String portWrite;
+	DataInputStream is;
+	DataOutputStream os;
 
-	ServerSocketManagement serverSocket;
+	ClientSocketManagement socket;
 
-	Simulator() {
-		service = Services.getInstance();
-		this.list = service.list;
-		this.listZichtMeter = service.listZichtMeter;
+	Simulator(String server, String portListen, String portWrite) {
+		this.server = server;
+		this.portListen = portListen;
+		this.portWrite = portWrite;
 	}
 
 	public void run() {
 
-		PropertiesObject props = PropertiesObject.getInstance();
+		socket = ClientSocketManagement.getInstance();
+		socket.adminSocket(this.server, this.portListen, this.portWrite);
+		is = socket.getDataInputStream();
+		os = socket.getDataOutputStream();
 
-		String server = props.getProperty("server");
-		String portListen = props.getProperty("portlisten");
-		String portWrite = props.getProperty("portwrite");
+		try {
+			while (true) {
 
-		// ServerSocket echoServer = null;
-		// String line;
-		DataInputStream is;
-		DataOutputStream os;
+				is = socket.getDataInputStream();
+				os = socket.getDataOutputStream();
+				if ((is == null) || (os == null)) {
+					socket.getConnectionSingle();
+				}
 
-		serverSocket = ServerSocketManagement.getInstance();
-		serverSocket.createServerSocket(server, portListen);
+				if ((is != null) && (os != null)) {
+					SendThread p1 = new SendThread(os);
+					p1.start();
 
-		is = null;
-		os = null;
+					ReceiveThread p2 = new ReceiveThread(is, "");
+					p2.start();
 
-		while (true) {
-			try {
-				serverSocket.waitForConnection();
-				is = serverSocket.getDataInputStream();
-				os = serverSocket.getDataOutputStream();
-
-				SendThread p1 = new SendThread(os);
-				p1.start();
-
-				ReceiveThread p2 = new ReceiveThread(is, "");
-				p2.start();
-
-				// Wait for ending threads
-				p1.join();
-				p2.join();
-
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+					// Wait for ending threads, btw: will never happen
+					p1.join();
+					p2.join();
+				}
 			}
+
+		} catch (InterruptedException e) {
+			;
 		}
 	}
-
 }

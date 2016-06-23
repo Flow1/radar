@@ -964,7 +964,7 @@ public class Radar {
 		frame.setSize(700, 700);
 		service = Services.getInstance();
 		service.createListOfZichtMeters();
-		Simulator sim = new Simulator();
+		SimulatorOld sim = new SimulatorOld();
 		sim.start();
 
 	}

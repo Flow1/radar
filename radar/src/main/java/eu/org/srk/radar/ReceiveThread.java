@@ -140,7 +140,7 @@ class ReceiveThread extends Thread {
 							b = is.readByte();
 
 							if ((b == 1) || (b == 2) || (b == 3) || (b == 4)
-									|| (b == 5)) {
+									|| (b == 5) || (b == 6) || (b == 7)) {
 								next = true;
 							} else {
 								// System.out.print("Invalid command received: ");

@@ -14,13 +14,16 @@ package eu.org.srk.radar;
 import java.io.*;
 import java.lang.Thread;
 import java.net.Socket;
+
+import eu.org.srk.radar.ClientSocketManagement;
+
 import java.net.*;
 
 public class ServerSocketManagement {
 	LoggerObject logs;
 
-	private static ServerSocketManagement instance = null;
-
+	private static ServerSocketManagement instance = null;	
+	
 	protected ServerSocketManagement() {
 	}
 
