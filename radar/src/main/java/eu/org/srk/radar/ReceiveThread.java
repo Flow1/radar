@@ -49,6 +49,7 @@ class ReceiveThread extends Thread {
 		error = false;
 
 		while (!error) {
+			//System.out.println("loop");
 			is = socket.getDataInputStream();
 			error = is == null;
 
@@ -71,6 +72,7 @@ class ReceiveThread extends Thread {
 					processWijzigingReisGegevensRIS(is);				
 			}
 		}
+		//System.out.println("Stopped");
 	}
 
 	private void disconnect() {
@@ -338,7 +340,7 @@ class ReceiveThread extends Thread {
 			int nchar = t.fromByteArray1(r);
 			
 			String scheepsnaam ="";
-			for (int i=0;i<nchar;i=i+4) {
+			for (int i=0;i<nchar;i++) {
 				r = getWord(is);
 				if (r[0]==0) r[0]=' ';
 				if (r[1]==0) r[1]=' ';
@@ -603,7 +605,7 @@ class ReceiveThread extends Thread {
 				int nchar = t.fromByteArray1(r);
 				
 				String scheepsnaam ="";
-				for (int i=0;i<nchar;i=i+4) {
+				for (int i=0;i<nchar;i++) {
 					r = getWord(is);
 					if (r[0]==0) r[0]=' ';
 					if (r[1]==0) r[1]=' ';
