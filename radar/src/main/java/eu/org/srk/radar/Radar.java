@@ -27,8 +27,11 @@ import javax.swing.JPanel;
 import eu.org.srk.radar.Binary;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class Radar {
 
@@ -659,13 +662,17 @@ public class Radar {
 
 		CT = CoordTrans.getInstance();
 
+		String shapes = "src/main/resources/shapes.csv";
+		
 		try {
-			BufferedReader br = null;
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(
-					"the shape.csv")));
 			String sCurrentLine;
-
+			BufferedReader br = null;
+			
+			
+				br = new BufferedReader(new FileReader(shapes));
+			
 			while ((sCurrentLine = br.readLine()) != null) {
+				
 				String xpos = sCurrentLine.substring(0,
 						sCurrentLine.indexOf(';'));
 				String ypos = sCurrentLine
@@ -693,11 +700,12 @@ public class Radar {
 		int yPoly[] = new int[count];
 
 		try {
-			BufferedReader br = null;
 			String sCurrentLine;
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(
-					"the shape.csv")));
 			count = 0;
+			BufferedReader br = null;
+			br = new BufferedReader(new FileReader(shapes));
+		
+			
 			while ((sCurrentLine = br.readLine()) != null) {
 				String xpos = sCurrentLine.substring(0,
 						sCurrentLine.indexOf(';'));
@@ -715,6 +723,8 @@ public class Radar {
 		} catch (Exception e) {
 			;
 		}
+		
+		
 
 		for (int i = 0; i < xPoly.length; i++) {
 			xPoly[i] = (int) (1.0 * (xPoly[i] - xposm2) / (xposm - xposm2) * (dimx + offsetx))
@@ -1353,7 +1363,7 @@ public class Radar {
 			public void run() {
 
 				PropertiesObject props = PropertiesObject.getInstance();
-				props.loadProperties("config.properties");
+				props.loadProperties("src/main/resources/config.properties");
 
 				LoggerObject logs = LoggerObject.getInstance();
 
