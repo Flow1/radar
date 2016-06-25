@@ -28,7 +28,7 @@ class ReceiveThread extends Thread {
 	LoggerObject logs;
 	boolean error = false;
 	Services service;
-	ServerSocketManagement socket;
+	ClientSocketManagement socket;
 
 	public ReceiveThread(DataInputStream p1, String command1) {
 		service = Services.getInstance();
@@ -38,7 +38,7 @@ class ReceiveThread extends Thread {
 	}
 
 	public void run() {
-		socket = ServerSocketManagement.getInstance();
+		socket = ClientSocketManagement.getInstance();
 		is = socket.getDataInputStream();
 		logs = LoggerObject.getInstance();
 
@@ -49,7 +49,6 @@ class ReceiveThread extends Thread {
 		error = false;
 
 		while (!error) {
-			//System.out.println("loop");
 			is = socket.getDataInputStream();
 			error = is == null;
 
@@ -72,7 +71,6 @@ class ReceiveThread extends Thread {
 					processWijzigingReisGegevensRIS(is);				
 			}
 		}
-		//System.out.println("Stopped");
 	}
 
 	private void disconnect() {

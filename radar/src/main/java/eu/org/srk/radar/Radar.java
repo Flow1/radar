@@ -974,9 +974,6 @@ public class Radar {
 		frame.setSize(700, 700);
 		service = Services.getInstance();
 		service.createListOfZichtMeters();
-		SimulatorOld sim = new SimulatorOld();
-		sim.start();
-
 	}
 
 	// #####################################################################################################################
@@ -1349,9 +1346,13 @@ public class Radar {
 		service.list = null;
 	};
 
-	public Radar(String f1, String f2) {
+	public Radar(String f1, String f2, String server, String portListen, String portWrite) {
 		filename = f1;
 		filenamezm = f2;
+		service = Services.getInstance();
+		service.createListOfZichtMeters();
+		Simulator sim = new Simulator(server,portListen,portWrite);
+		sim.start();
 	}
 
 	// #####################################################################################################################
@@ -1394,13 +1395,14 @@ public class Radar {
 					System.exit(0);
 				}
 
-				Radar t = new Radar(filename, filenamezm);
+				Radar t = new Radar(filename, filenamezm, server,portListen,portWrite);
 				ButtonB = StopButton.getInstance();
 				ButtonB.setButton(true);
 
 				t.createAndShowGUI();
+
 			}
-		});
+	});
+	}
 	}
 
-}

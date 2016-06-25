@@ -29,7 +29,7 @@ class SendThread extends Thread {
 	StopButton buttonB;
 
 	DataOutputStream os;
-	ServerSocketManagement socket;
+	ClientSocketManagement socket;
 
 	public SendThread(DataOutputStream p1) {
 		service = Services.getInstance();
@@ -43,7 +43,7 @@ class SendThread extends Thread {
 
 	public void run() {
 
-		socket = ServerSocketManagement.getInstance();
+		socket = ClientSocketManagement.getInstance();
 
 		// Test sending
 		// sendTest();

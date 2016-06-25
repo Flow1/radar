@@ -88,7 +88,7 @@ public class ClientSocketManagement {
 
 			busy = true;
 			if (!supress) {
-				logs.logInfo("Single socket connection to radar required");
+				logs.logInfo("Single socket connection to IVS required");
 
 			}
 			try {
